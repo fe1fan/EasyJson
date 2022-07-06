@@ -18,41 +18,38 @@ public class Json {
         String key = null;
         Object val = null;
         JsonObject jsonObject = new JsonObject();
-        boolean keyTime = true;
         for (int i = from; i < jsonTokenList.size(); i++) {
             JsonToken jsonToken = jsonTokenList.get(i);
             switch (jsonToken.getEnums()) {
                 case BEGIN_OBJECT:
-                    if (keyTime) {
-                        continue;
-                    } else {
-                        jsonObject.put(key, parseJsonObject(jsonStr, i));
+                    if (key != null){
+                        JsonObject childObj = parseJsonObject(jsonStr, i + 1);
+                        i = childObj.i;
+                        jsonObject.put(key, childObj);
                     }
                     break;
                 case END_OBJECT:
-                    return jsonObject;
                 case SEP_COLON:
-                    keyTime = false;
-                    break;
                 case SEP_COMMA:
-                    keyTime = true;
                     break;
                 case NUMBER:
                 case BOOLEAN:
                 case NULL:
                 case STRING:
-                    if (keyTime) {
+                    if (key == null) {
                         key = jsonToken.getValue();
                     } else {
                         val = jsonToken.getValue();
                     }
             }
-            if (!keyTime) {
+            if (key != null && val != null) {
                 jsonObject.put(key, val);
                 key = null;
                 val = null;
             }
+            jsonObject.i = i;
         }
+
         return jsonObject;
     }
 
