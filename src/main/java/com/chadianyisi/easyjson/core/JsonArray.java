@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JsonArray {
-    private List<Object> list = new ArrayList();
 
-    public void add(Object obj) {
+    public int i;
+
+    private List<JsonObject> list = new ArrayList();
+
+    public void add(JsonObject obj) {
         list.add(obj);
     }
 
-    public Object get(int index) {
+    public JsonObject get(int index) {
         return list.get(index);
     }
 

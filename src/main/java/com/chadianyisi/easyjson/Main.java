@@ -1,24 +1,16 @@
 package com.chadianyisi.easyjson;
 
 import com.chadianyisi.easyjson.core.Json;
+import com.chadianyisi.easyjson.core.JsonArray;
 import com.chadianyisi.easyjson.core.JsonObject;
-
-import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
-        JsonObject jsonObject = Json.parseJsonObject("{\"key\": 1, \"value\": 1, \"obj\":{\"key\": 1, \"successful\": false, \"value\": 1}}");
-//        JsonObject jsonObject = Json.parseJsonObject("{\"key\": 1, \"value\": 1");
-        Set<String> keys = jsonObject.getKeys();
-        for (String key : keys) {
-            System.out.println(key);
+//        JsonObject jsonObject = Json.parseJsonObject("{\"key\": 1, \"value\": 1, \"obj\":{\"key\": 1, \"successful\": false, \"value\": 1}}");
+        JsonArray jsonArray = Json.parseJsonArray("[{\"key\": 1, \"value\": 1}, {\"key\": 1, \"value\": 1}]");
+        for (int i = 0; i < jsonArray.size(); i++) {
+            JsonObject o = jsonArray.get(i);
+            System.out.println(o.getKeys());
         }
-        System.out.println("------");
-        Object obj = jsonObject.get("key");
-        System.out.println(obj);
-        Object obj1 = jsonObject.get("value");
-        Object o = jsonObject.getJsonObject("obj").get("successful");
-        System.out.println(obj1);
-        System.out.println(o);
     }
 }
